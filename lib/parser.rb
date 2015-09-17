@@ -26,18 +26,21 @@ class Parser
     sheet.delete_row(0)
     sheet.delete_column(0)
 
-    # sheet.each do |row|
+    puts "Saving records"
 
-    row = sheet[0]
-    puts "Saving to DB"
-    adv = Advert.new
-    adv.declarant = row.cells[0].value
-    adv.save
-    puts "Saved"
-    puts adv
-    puts Advert.all
-    # row.cells.each_with_index do |cell, i|
-    #   puts "#{i} #{cell.value}"
-    # end
+    i = 0
+
+    sheet.each do |row|
+
+      row.cells.each_with_index do |cell, i|
+        adv = Advert.new
+        adv.__send__(Advert.fields.key(i)) = cell.value
+        adv.save
+        print '.'
+      end
+      i+=1
+    end
+    puts
+    puts "Done! #{i} records processed"
   end
 end
