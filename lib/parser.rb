@@ -32,12 +32,12 @@ class Parser
 
     sheet.each do |row|
 
+      adv = Advert.new
       row.cells.each_with_index do |cell, i|
-        adv = Advert.new
-        adv.__send__(Advert.fields.key(i)) = cell.value
-        adv.save
-        print '.'
+        adv.__send__(Advert.fields.key(i) + '=', cell.value)
       end
+      adv.save
+      print '.'
       i+=1
     end
     puts
