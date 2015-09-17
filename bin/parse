@@ -1,2 +1,8 @@
 #!/bin/bash
-bundle exec rake parse:start
+if [ $# -eq  0 ]
+then
+  echo "No file provided"
+  echo "Usage: $0 [file]"
+else
+  bundle exec rake parse:start[$1]
+fi

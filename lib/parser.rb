@@ -1,25 +1,36 @@
-module XLSToDB
+require 'rubyXL'
 
-  class Parser < ActiveRecord::Base
+class Parser
 
-    def initialize
-      puts "Nine' One xls -> DB reader"
-      puts 'Parsing ' + filename
+  attr_accessor :filename
 
-      workbook = RubyXL::Parser.parse(filename)
-      sheet = workbook[0]
+  def initialize &block
+    instance_eval &block
 
-      sheet.delete_row(0)
-      sheet.delete_column(0)
+    puts "Nine' One xls -> DB reader"
+    puts "Initializing database connection"
 
-      row = sheet[0]
-      row.cells.each_with_index do |cell, i|
-        puts "#{i} #{cell.value}"
-      end
+    db = Database.new
+    
+    puts "Parsing " + filename
 
-    end
+    workbook = RubyXL::Parser.parse(filename)
 
+    puts "Done parsing. Cleaning up id column and title row"
+
+    # sheet = workbook[0]
+    # sheet.delete_row(0)
+    # sheet.delete_column(0)
+    #
+    # row = sheet[0]
+    # row.cells.each_with_index do |cell, i|
+    #   puts "#{i} #{cell.value}"
+    # end
 
   end
 
+
+  def parse!
+    puts "Test"
+  end
 end
